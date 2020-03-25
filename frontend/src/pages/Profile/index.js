@@ -22,12 +22,11 @@ export default function Profile() {
         }).then(response => {
             setIncidents(response.data)
         })
-    }, [ongId, incidents])
+    }, [ongId])
 
     // Funçao para apagar caso pelo botão
     async function handleDeleteEvent(id) {
         try {
-
             document.getElementById(id).style.backgroundColor = '#e02041aa';
             document.getElementById(id).style.transition = '.3s';
 
@@ -36,6 +35,8 @@ export default function Profile() {
                     Authorization: ongId,
                 },
             });
+
+            setIncidents(incidents.filter(incident => incident.id !== id));
         } catch {
             alert('Erro ao deletar')
         }
@@ -43,7 +44,7 @@ export default function Profile() {
 
     async function handleLogout() {
         localStorage.clear();
-        history.push('/')
+        history.push('/profile')
     }
     
 
@@ -60,8 +61,7 @@ export default function Profile() {
             </header>
 
             <h1>Casos cadastrados</h1>
-            <ul>
-                {incidents.map(incident => (
+            <ul>{incidents.map(incident => (
                     <li key={incident.id} id={incident.id}>
                         <strong>CASO:</strong>
                         <p>{incident.tile}</p>
