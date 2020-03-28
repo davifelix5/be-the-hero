@@ -44,7 +44,7 @@ export default function Profile() {
 
     async function handleLogout() {
         localStorage.clear();
-        history.push('/profile')
+        history.push('/')
     }
     
 
