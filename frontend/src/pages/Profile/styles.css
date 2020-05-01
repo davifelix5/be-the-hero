@@ -86,3 +86,9 @@
     line-height: 21px;
     font-size: 16px;
 }
+
+.notFound {
+    color: #737380;
+    display: inline-block;
+    font-size: 24px;
+}

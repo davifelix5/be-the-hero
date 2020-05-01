@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiPower, FiTrash2 } from 'react-icons/fi'
 import logoImg from '../../assets/logo.svg';
@@ -46,12 +46,40 @@ export default function Profile() {
         localStorage.clear();
         history.push('/')
     }
-    
+
+    function renderIncidents() {
+        if (incidents.length === 0) {
+            return <p className="notFound">Não há Casos</p>
+        } else {
+            return (
+                <ul>
+                    {incidents.map(incident => (
+                        <li key={incident.id} id={incident.id}>
+                            <strong>CASO:</strong>
+                            <p>{incident.title}</p>
+
+                            <strong>DESCRIÇÃO:</strong>
+                            <p>{incident.description}</p>
+
+                            <strong>VALOR:</strong>
+                            <p>{incident.value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+
+                            <button type="button" onClick={() => handleDeleteEvent(incident.id)}>
+                                <FiTrash2 size={20} color="#a8a8b3" />
+                            </button>
+                        </li>
+                    )
+                    )
+                    }
+                </ul>
+            )
+        }
+    }
 
     return (
         <div className="profile-container">
             <header>
-                <img src={logoImg} alt="Be a hero"/>
+                <img src={logoImg} alt="Be a hero" />
                 <span>Bem vinda, {ongName}</span>
 
                 <Link className="button" to="/incidents/new">Cadastrar novo caso</Link>
@@ -59,25 +87,8 @@ export default function Profile() {
                     <FiPower size="18" color="E02041" />
                 </button>
             </header>
-
             <h1>Casos cadastrados</h1>
-            <ul>{incidents.map(incident => (
-                    <li key={incident.id} id={incident.id}>
-                        <strong>CASO:</strong>
-                        <p>{incident.tile}</p>
-                
-                        <strong>DESCRIÇÃO:</strong>
-                        <p>{incident.description}</p>
-                
-                        <strong>VALOR:</strong>
-                        <p>{incident.value.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>
-                
-                        <button type="button" onClick={() => handleDeleteEvent(incident.id)}>
-                            <FiTrash2 size={20} color="#a8a8b3" />
-                        </button>
-                    </li>
-                ))}
-            </ul>
+            {renderIncidents()}
         </div>
     );
 }
