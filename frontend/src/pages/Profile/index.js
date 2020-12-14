@@ -45,15 +45,23 @@ export default function Profile() {
     async function handleLogout() {
         localStorage.clear();
         history.push('/')
-    }
+    }	
 
-    function renderIncidents() {
-        if (incidents.length === 0) {
-            return <p className="notFound">Não há Casos</p>
-        } else {
-            return (
-                <ul>
-                    {incidents.map(incident => (
+    return (
+        <div className="profile-container">
+            <header>
+                <img src={logoImg} alt="Be a hero" />
+                <span>Bem vinda, {ongName}</span>
+
+                <Link className="button" to="/incidents/new">Cadastrar novo caso</Link>
+                <button onClick={handleLogout}>
+                    <FiPower size="18" color="E02041" />
+                </button>
+            </header>
+            <h1>Casos cadastrados</h1>
+            {incidents.length === 0 && <p className="notFound">Não há Casos</p>}
+			<ul>
+				{incidents.map(incident => (
                         <li key={incident.id} id={incident.id}>
                             <strong>CASO:</strong>
                             <p>{incident.title}</p>
@@ -69,26 +77,9 @@ export default function Profile() {
                             </button>
                         </li>
                     )
-                    )
-                    }
-                </ul>
-            )
-        }
-    }
-
-    return (
-        <div className="profile-container">
-            <header>
-                <img src={logoImg} alt="Be a hero" />
-                <span>Bem vinda, {ongName}</span>
-
-                <Link className="button" to="/incidents/new">Cadastrar novo caso</Link>
-                <button onClick={handleLogout}>
-                    <FiPower size="18" color="E02041" />
-                </button>
-            </header>
-            <h1>Casos cadastrados</h1>
-            {renderIncidents()}
+				)}
+			</ul>
+			
         </div>
     );
 }
